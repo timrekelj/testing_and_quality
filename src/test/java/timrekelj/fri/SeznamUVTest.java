@@ -6,163 +6,303 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SeznamUVTest {
 
-
+    /////////////////////////////////// SKLAD ///////////////////////////////////
     @Test
-    public void testPushBasic() {
+    public void s_testAddBasic() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testPushBasic");
-        assertEquals("OK", uv.processInput("push Test1"));
-        assertEquals("OK", uv.processInput("push Test2"));
+        System.out.println("s_testAddBasic");
+        assertEquals("OK", uv.processInput("s_add Test1"));
+        assertEquals("OK", uv.processInput("s_add Test2"));
     }
 
     @Test
-    public void testPushMultipleWords() {
+    public void s_testAddMultipleWords() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testPushMultipleWords");
-        assertEquals("OK",
-                uv.processInput("push \"Test with multiple words\""));
-        assertEquals("1", uv.processInput("count"));
-        assertEquals("OK", uv.processInput(
-                "push \"Another test with multiple words\""));
-        assertEquals("2", uv.processInput("count"));
+        System.out.println("s_testAddMultipleWords");
+        assertEquals("OK", uv.processInput("s_add \"Test with multiple words\""));
+        assertEquals("1", uv.processInput("s_size"));
+        assertEquals("OK", uv.processInput("s_add \"Another test with multiple words\""));
+        assertEquals("2", uv.processInput("s_size"));
     }
 
     @Test
-    public void testPushNothing() {
+    public void s_testAddNothing() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testPushNothing");
-        assertEquals("Error: please specify a string",
-                uv.processInput("push"));
+        System.out.println("s_testAddNothing");
+        assertEquals("Error: please specify a string", uv.processInput("s_add"));
     }
 
     @Test
-    public void testPopBasic() {
+    public void s_testRemoveFirstBasic() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testPopBasic");
-        assertEquals("OK", uv.processInput("push Test1"));
-        assertEquals("OK", uv.processInput("push Test2"));
-        assertEquals("Test2", uv.processInput("pop"));
-        assertEquals("Test1", uv.processInput("pop"));
+        System.out.println("s_testRemoveFirstBasic");
+        assertEquals("OK", uv.processInput("s_add Test1"));
+        assertEquals("OK", uv.processInput("s_add Test2"));
+        assertEquals("Test2", uv.processInput("s_remove_first"));
+        assertEquals("Test1", uv.processInput("s_remove_first"));
     }
     @Test
-    public void testPopMultipleWords() {
+    public void s_testRemoveFirstMultipleWords() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testPopMultipleWords");
-        assertEquals("OK", uv.processInput(
-                "push \"Test with multiple words\""));
-        assertEquals("OK", uv.processInput(
-                "push \"Another test with multiple words\""));
-        assertEquals("2", uv.processInput("count"));
-        assertEquals("Another test with multiple words",
-                uv.processInput("pop"));
-        assertEquals("1", uv.processInput("count"));
-        assertEquals("Test with multiple words",
-                uv.processInput("pop"));
-        assertEquals("0", uv.processInput("count"));
-    }
-    public void testPopNothing() {
-        SeznamiUV uv = new SeznamiUV();
-        System.out.println("testPopNothing");
-        assertEquals("Error: stack is empty",
-                uv.processInput("pop"));
-        assertEquals("Error: please specify a string",
-                uv.processInput("push"));
-        assertEquals("Error: stack is empty",
-                uv.processInput("pop"));
+        System.out.println("s_testRemoveFirstMultipleWords");
+        assertEquals("OK", uv.processInput("s_add \"Test with multiple words\""));
+        assertEquals("OK", uv.processInput("s_add \"Another test with multiple words\""));
+        assertEquals("2", uv.processInput("s_size"));
+        assertEquals("Another test with multiple words",uv.processInput("s_remove_first"));
+        assertEquals("1", uv.processInput("s_size"));
+        assertEquals("Test with multiple words", uv.processInput("s_remove_first"));
+        assertEquals("0", uv.processInput("s_size"));
     }
 
     @Test
-    public void testResetOnEmpty() {
+    public void s_testRemoveFirstNothing() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testResetOnEmpty");
-        assertEquals("OK", uv.processInput("reset"));
+        System.out.println("s_testRemoveFirstNothing");
+        assertEquals("Error: stack is empty", uv.processInput("s_remove_first"));
+        assertEquals("Error: please specify a string", uv.processInput("s_add"));
+        assertEquals("Error: stack is empty", uv.processInput("s_remove_first"));
     }
 
     @Test
-    public void testResetOnFull() {
+    public void s_testResetOnEmpty() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testResetOnFull");
-        assertEquals("OK", uv.processInput("push Test"));
-        assertEquals("OK", uv.processInput("reset"));
-        assertEquals("Error: stack is empty",
-                uv.processInput("pop"));
-        assertEquals("0", uv.processInput("count"));
-    }
-    @Test
-    public void testCountOnEmpty() {
-        SeznamiUV uv = new SeznamiUV();
-        System.out.println("testCountOnEmpty");
-        assertEquals("0", uv.processInput("count"));
-    }
-    @Test
-    public void testCountOne() {
-        SeznamiUV uv = new SeznamiUV();
-        System.out.println("testCountOne");
-        assertEquals("OK", uv.processInput("push Test"));
-        assertEquals("1", uv.processInput("count"));
-    }
-    @Test
-    public void testCountTwo() {
-        SeznamiUV uv = new SeznamiUV();
-        System.out.println("testCountTwo");
-        assertEquals("OK", uv.processInput("push Test1"));
-        assertEquals("OK", uv.processInput("push Test2"));
-        assertEquals("2", uv.processInput("count"));
+        System.out.println("s_testResetOnEmpty");
+        assertEquals("OK", uv.processInput("s_reset"));
     }
 
     @Test
-    public void testIsTopEmpty() {
+    public void s_testResetOnFull() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testIsTopEmpty");
-        assertEquals("Error: stack is empty", uv.processInput("isTop Test"));
+        System.out.println("s_testResetOnFull");
+        assertEquals("OK", uv.processInput("s_add Test"));
+        assertEquals("OK", uv.processInput("s_reset"));
+        assertEquals("Error: stack is empty", uv.processInput("s_remove_first"));
+        assertEquals("0", uv.processInput("s_size"));
+    }
+    @Test
+    public void s_testSizeOnEmpty() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("s_testSizeOnEmpty");
+        assertEquals("0", uv.processInput("s_size"));
+    }
+    @Test
+    public void s_testCountOne() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("s_testCountOne");
+        assertEquals("OK", uv.processInput("s_add Test"));
+        assertEquals("1", uv.processInput("s_size"));
+    }
+    @Test
+    public void s_testCountTwo() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("s_testCountTwo");
+        assertEquals("OK", uv.processInput("s_add Test1"));
+        assertEquals("OK", uv.processInput("s_add Test2"));
+        assertEquals("2", uv.processInput("s_size"));
     }
 
     @Test
-    public void testIsTopTrue() {
+    public void s_testIsFirstEmpty() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testIsTopTrue");
-        uv.processInput("push Test");
-        assertEquals("OK", uv.processInput("isTop Test"));
+        System.out.println("s_testIsFirstEmpty");
+        assertEquals("Error: stack is empty", uv.processInput("s_is_first Test"));
     }
 
     @Test
-    public void testIsTopFalse() {
+    public void s_testIsFirstTrue() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testIsTopFalse");
-        uv.processInput("push Test");
-        assertEquals("Error: wrong element", uv.processInput("isTop tseT"));
+        System.out.println("s_testIsFirstTrue");
+        uv.processInput("s_add Test");
+        assertEquals("OK", uv.processInput("s_is_first Test"));
     }
 
     @Test
-    public void testIsTopNoString() {
+    public void s_testIsFirstFalse() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testIsTopNoString");
-        assertEquals("Error: please specify a string", uv.processInput("isTop"));
+        System.out.println("s_testIsFirstFalse");
+        uv.processInput("s_add Test");
+        assertEquals("Error: wrong element", uv.processInput("s_is_first tseT"));
     }
 
     @Test
-    public void testSearchNoString() {
+    public void s_testIsFirstNoString() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testSearchNoString");
-        assertEquals("Error: please specify a string", uv.processInput("search"));
+        System.out.println("s_testIsFirstNoString");
+        assertEquals("Error: please specify a string", uv.processInput("s_is_first"));
     }
 
     @Test
-    public void testSearchSuccess() {
+    public void s_testSearchNoString() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testSearchSuccess");
-        uv.processInput("push Test0");
-        uv.processInput("push Test1");
-        uv.processInput("push Test2");
-        uv.processInput("push Test3");
-        assertEquals("1", uv.processInput("search Test2"));
+        System.out.println("s_testSearchNoString");
+        assertEquals("Error: please specify a string", uv.processInput("s_search"));
     }
 
     @Test
-    public void testSearchWrongString() {
+    public void s_testSearchSuccess() {
         SeznamiUV uv = new SeznamiUV();
-        System.out.println("testSearchWrongString");
-        uv.processInput("push \"Test\"");
-        assertEquals("Error: invalid string", uv.processInput("search \"Test"));
+        System.out.println("s_testSearchSuccess");
+        uv.processInput("s_add Test0");
+        uv.processInput("s_add Test1");
+        uv.processInput("s_add Test2");
+        uv.processInput("s_add Test3");
+        assertEquals("1", uv.processInput("s_search Test2"));
+    }
+
+    @Test
+    public void s_testSearchWrongString() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("s_testSearchWrongString");
+        uv.processInput("s_add \"Test\"");
+        assertEquals("Error: invalid string", uv.processInput("s_search \"Test"));
+    }
+
+    /////////////////////////////////// PRIORITETNA VRSTA ///////////////////////////////////
+    @Test
+    public void pq_testAddBasic() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testAddBasic");
+        assertEquals("OK", uv.processInput("pq_add Test1"));
+        assertEquals("OK", uv.processInput("pq_add Test2"));
+    }
+
+    @Test
+    public void pq_testAddNothing() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testAddNothing");
+        assertEquals("Error: please specify a string", uv.processInput("pq_add"));
+    }
+
+    @Test
+    public void pq_testRemoveFirstBasic() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testRemoveFirstBasic");
+        assertEquals("OK", uv.processInput("pq_add Test1"));
+        assertEquals("OK", uv.processInput("pq_add Test2"));
+        assertEquals("Test2", uv.processInput("pq_remove_first"));
+        assertEquals("Test1", uv.processInput("pq_remove_first"));
+    }
+
+    @Test
+    public void pq_testRemoveFirstNothing() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testRemoveFirstNothing");
+        assertEquals("Error: priority queue is empty", uv.processInput("pq_remove_first"));
+        assertEquals("Error: please specify a string", uv.processInput("pq_add"));
+        assertEquals("Error: priority queue is empty", uv.processInput("pq_remove_first"));
+    }
+
+    @Test
+    public void pq_testGetFirstNothing() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testGetFirstNothing");
+        assertEquals("Error: priority queue is empty", uv.processInput("pq_get_first"));
+        assertEquals("Error: please specify a string", uv.processInput("pq_add"));
+        assertEquals("Error: priority queue is empty", uv.processInput("pq_get_first"));
+    }
+
+    @Test
+    public void pq_testGetFirstFull() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testGetFirstFull");
+        uv.processInput("pq_add Test");
+        assertEquals("Test", uv.processInput("pq_get_first"));
+    }
+
+    @Test
+    public void pq_testGetFirstWithRemoveFirst() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testGetFirstFull");
+        uv.processInput("pq_add Test1");
+        uv.processInput("pq_add Test2");
+        uv.processInput("pq_remove_first");
+        assertEquals("Test1", uv.processInput("pq_get_first"));
+    }
+
+    //pq_size
+    @Test
+    public void pq_testSizeEmpty() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testSizeEmpty");
+        assertEquals("0", uv.processInput("pq_size"));
+    }
+
+    @Test
+    public void pq_testSizeOne() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testSizeOne");
+        uv.processInput("pq_add Test");
+        assertEquals("1", uv.processInput("pq_size"));
+    }
+
+    @Test
+    public void pq_testSizeTwo() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testSizeTwo");
+        uv.processInput("pq_add Test1");
+        uv.processInput("pq_add Test2");
+        assertEquals("2", uv.processInput("pq_size"));
+    }
+
+    @Test
+    public void pq_testDepthEmpty() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testDepthEmpty");
+        assertEquals("0", uv.processInput("pq_depth"));
+    }
+
+    @Test
+    public void pq_testDepthOne() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testDepthOne");
+        uv.processInput("pq_add Test");
+        assertEquals("1", uv.processInput("pq_depth"));
+    }
+
+    @Test
+    public void pq_testDepthMultiple() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testDepthMultiple");
+        uv.processInput("pq_add Test1");
+        assertEquals("1", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test2");
+        assertEquals("2", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test3");
+        assertEquals("2", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test4");
+        assertEquals("3", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test5");
+        assertEquals("3", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test6");
+        assertEquals("3", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test7");
+        assertEquals("3", uv.processInput("pq_depth"));
+        uv.processInput("pq_add Test8");
+        assertEquals("4", uv.processInput("pq_depth"));
+    }
+    //pq_isEmpty
+    @Test
+    public void pq_testIsEmptyEmpty() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testIsEmptyEmpty");
+        assertEquals("Priority queue is empty", uv.processInput("pq_isEmpty"));
+    }
+
+    @Test
+    public void pq_testIsEmptyOne() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testIsEmptyOne");
+        uv.processInput("pq_add Test");
+        assertEquals("Priority queue is not empty", uv.processInput("pq_isEmpty"));
+    }
+
+    @Test
+    public void pq_testIsEmptyWithRemoveFirst() {
+        SeznamiUV uv = new SeznamiUV();
+        System.out.println("pq_testIsEmptyOne");
+        uv.processInput("pq_add Test");
+        assertEquals("Priority queue is not empty", uv.processInput("pq_isEmpty"));
+        uv.processInput("pq_remove_first");
+        assertEquals("Priority queue is empty", uv.processInput("pq_isEmpty"));
     }
 }

@@ -1,6 +1,6 @@
 package timrekelj.fri;
 
-public class Sklad<G> {
+public class Sklad<G> implements Seznam<G> {
     private int size;
     private Element<G> root;
 
@@ -8,14 +8,16 @@ public class Sklad<G> {
         size = 0;
     }
 
-    public void push(G value) {
-        Element<G> newElement = new Element<>(value);
+    @Override
+    public void add(G e) {
+        Element<G> newElement = new Element<>(e);
         newElement.next = root;
         root = newElement;
         size++;
     }
 
-    public G pop() {
+    @Override
+    public G removeFirst() {
         if (root == null) {
             throw new java.util.NoSuchElementException();
         }
@@ -25,19 +27,37 @@ public class Sklad<G> {
         return result;
     }
 
-    public int size() {
-        return size;
+    @Override
+    public G remove() {
+        throw new RuntimeException("Not implemented");
     }
 
-    public Boolean isEmpty() {
-        return (root == null);
-    }
-
-    public G top() {
+    @Override
+    public G getFirst() {
         if (root == null) {
             throw new java.util.NoSuchElementException();
         }
         return root.value;
+    }
+
+    @Override
+    public G get() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public int depth() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (root == null);
     }
 
     public int search(G value) {

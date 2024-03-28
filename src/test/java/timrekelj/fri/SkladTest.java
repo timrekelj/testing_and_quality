@@ -7,39 +7,39 @@ import static org.junit.jupiter.api.Assertions.*;
 class SkladTest {
 
     @Test
-    void testPush() {
+    void testAdd() {
         Sklad<String> instance = new Sklad<>();
         String a = "Test";
-        instance.push(a);
+        instance.add(a);
     }
 
     @Test
-    void testPop() {
+    void testRemoveFirst() {
         Sklad<String> instance = new Sklad<>();
         String a = "Test";
-        instance.push(a);
-        String b = instance.pop();
+        instance.add(a);
+        String b = instance.removeFirst();
         assertEquals(b, "Test");
     }
 
     @Test
-    void testPopOnEmptyStact() {
+    void testRemoveFirstOnEmptyStact() {
         Sklad<String> instance = new Sklad<>();
-        assertThrows(java.util.NoSuchElementException.class, instance::pop);
+        assertThrows(java.util.NoSuchElementException.class, instance::removeFirst);
     }
 
     @Test
-    void popWithTwoElements() {
+    void removeFirstWithTwoElements() {
         Sklad<String> instance = new Sklad<>();
         String a = "TestA";
         String b = "TestB";
 
-        instance.push(a);
-        instance.push(b);
+        instance.add(a);
+        instance.add(b);
 
-        assertEquals(instance.pop(), "TestB");
-        assertEquals(instance.pop(), "TestA");
-        assertThrows(java.util.NoSuchElementException.class, instance::pop);
+        assertEquals(instance.removeFirst(), "TestB");
+        assertEquals(instance.removeFirst(), "TestA");
+        assertThrows(java.util.NoSuchElementException.class, instance::removeFirst);
     }
 
     @Test
@@ -51,44 +51,44 @@ class SkladTest {
     @Test
     void isEmptyOnFull() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test");
+        instance.add("Test");
         assertFalse(instance.isEmpty());
     }
 
     @Test
-    void topOnEmpty() {
+    void getFirstOnEmpty() {
         Sklad<String> instance = new Sklad<>();
-        assertThrows(java.util.NoSuchElementException.class, instance::top);
+        assertThrows(java.util.NoSuchElementException.class, instance::getFirst);
     }
 
     @Test
-    void topWithOneElement() {
+    void getFirstWithOneElement() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test");
-        assertEquals(instance.top(), "Test");
+        instance.add("Test");
+        assertEquals(instance.getFirst(), "Test");
     }
 
     @Test
-    void topWithFiveElements() {
+    void getFirstWithFiveElements() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
-        instance.push("Test4");
-        instance.push("Test5");
-        assertEquals(instance.top(), "Test5");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
+        instance.add("Test4");
+        instance.add("Test5");
+        assertEquals(instance.getFirst(), "Test5");
     }
 
     @Test
-    void topTwice() {
+    void getFirstTwice() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
-        instance.push("Test4");
-        instance.push("Test5");
-        assertEquals(instance.top(), "Test5");
-        assertEquals(instance.top(), "Test5");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
+        instance.add("Test4");
+        instance.add("Test5");
+        assertEquals(instance.getFirst(), "Test5");
+        assertEquals(instance.getFirst(), "Test5");
     }
 
     @Test
@@ -100,54 +100,54 @@ class SkladTest {
     @Test
     void sizeWithOneElement() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test");
+        instance.add("Test");
         assertEquals(instance.size(), 1);
     }
 
     @Test
     void sizeWithFiveElements() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
-        instance.push("Test4");
-        instance.push("Test5");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
+        instance.add("Test4");
+        instance.add("Test5");
         assertEquals(instance.size(), 5);
     }
 
     @Test
     void searchOnTop() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
         assertEquals(instance.search("Test3"), 0);
     }
 
     @Test
     void searchMiddle() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
         assertEquals(instance.search("Test2"), 1);
     }
 
     @Test
     void searchBottom() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
         assertEquals(instance.search("Test1"), 2);
     }
 
     @Test
     void searchNotFound() {
         Sklad<String> instance = new Sklad<>();
-        instance.push("Test1");
-        instance.push("Test2");
-        instance.push("Test3");
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
         assertEquals(instance.search("Test"), -1);
     }
 

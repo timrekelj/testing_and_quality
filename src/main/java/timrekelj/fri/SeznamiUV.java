@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public class SeznamiUV {
     private Sklad<String> sklad;
+    private PrioritetnaVrsta<String> vrsta;
 
     public SeznamiUV() {
         sklad = new Sklad<String>();
+        vrsta = new PrioritetnaVrsta<String>();
     }
 
     public String processInput(String input) {
@@ -15,7 +17,8 @@ public class SeznamiUV {
         String value = "";
         String result = "OK";
         switch (token) {
-            case "push":
+            /////////////////////////////////// SKLAD ///////////////////////////////////
+            case "s_add":
                 if (!sc.hasNext()) {
                     result = "Error: please specify a string";
                     break;
@@ -25,7 +28,7 @@ public class SeznamiUV {
                     while (sc.hasNext()) {
                         value += " " + sc.next();
                         if (value.charAt(value.length()-1) == '\"')
-                            sklad.push(value.substring(1, value.length()-1));
+                            sklad.add(value.substring(1, value.length()-1));
                     }
                     if (value.charAt(value.length()-1) == '\"')
                         result = "OK";
@@ -33,19 +36,19 @@ public class SeznamiUV {
                         result = "Error: invalid string";
                     break;
                 }
-                sklad.push(value);
+                sklad.add(value);
                 break;
-            case "pop":
-                result = !sklad.isEmpty() ? sklad.pop() : "Error: stack is empty";
+            case "s_remove_first":
+                result = !sklad.isEmpty() ? sklad.removeFirst() : "Error: stack is empty";
                 break;
-            case "reset":
+            case "s_reset":
                 while (!sklad.isEmpty())
-                    sklad.pop();
+                    sklad.removeFirst();
                 break;
-            case "count":
+            case "s_size":
                 result = Integer.toString(sklad.size());
                 break;
-            case "isTop":
+            case "s_is_first":
                 if (!sc.hasNext()) {
                     result = "Error: please specify a string";
                     break;
@@ -54,12 +57,12 @@ public class SeznamiUV {
                     result = "Error: stack is empty";
                     break;
                 }
-                if (sc.next().equals(sklad.top()))
+                if (sc.next().equals(sklad.getFirst()))
                     result = "OK";
                 else
                     result = "Error: wrong element";
                 break;
-            case "search":
+            case "s_search":
                 if (!sc.hasNext()) {
                     result = "Error: please specify a string";
                     break;
@@ -77,6 +80,40 @@ public class SeznamiUV {
                 }
                 result = Integer.toString(sklad.search(value));
                 break;
+
+            /////////////////////////////////// PRIORITETNA VRSTA ///////////////////////////////////
+            case "pq_add": // brez elementov z več nizi “"
+                if (sc.hasNext()) {
+                    String val = sc.next();
+                    vrsta.add(val);
+                }
+                else
+                    result = "Error: please specify a string";
+                break;
+            case "pq_remove_first":
+                if (!vrsta.isEmpty())
+                    result = vrsta.removeFirst();
+                else
+                    result = "Error: priority queue is empty";
+                break;
+            case "pq_get_first":
+                if (!vrsta.isEmpty())
+                    result = vrsta.getFirst();
+                else
+                    result = "Error: priority queue is empty";
+                break;
+            case "pq_size":
+                result = String.valueOf(vrsta.size());
+                break;
+            case "pq_depth":
+                result = String.valueOf(vrsta.depth());
+                break;
+            case "pq_isEmpty":
+                result = vrsta.isEmpty() ? "Priority queue is empty" : "Priority queue is not empty";
+                break;
+
+            default:
+                result = "Error: Invalid command";
         }
         return result;
     }
