@@ -7,22 +7,6 @@ public class PrioritetnaVrsta<G extends Comparable> implements Seznam<G> {
     public PrioritetnaVrsta() { this(100); }
     public PrioritetnaVrsta(int maxSize) { heap = new Object[maxSize]; }
 
-    private void bubbleUp() {
-        int eltIdx = end - 1;
-        while (eltIdx >= 0) {
-            G elt = (G) heap[eltIdx];
-            int childIdx = eltIdx * 2 + 1;
-            if (childIdx < end) {
-                G child = (G) heap[childIdx];
-                if (childIdx + 1 < end && child.compareTo(heap[childIdx+1]) < 0)
-                    child = (G) heap[++childIdx];
-                if (elt.compareTo(child) >= 0)
-                    return;
-                swap(eltIdx, childIdx);
-            }
-            eltIdx = eltIdx % 2 == 1 ? (eltIdx - 1) / 2 : (eltIdx - 2) / 2;
-        }
-    }
     @Override
     public void add (G e) {
         if (end == heap.length)
@@ -30,21 +14,7 @@ public class PrioritetnaVrsta<G extends Comparable> implements Seznam<G> {
         heap[end++] = e;
         bubbleUp();
     }
-    private void bubbleDown(int start) {
-        int eltIdx = start;
-        int childIdx = eltIdx * 2 + 1;
-        while (childIdx < end) {
-            G elt = (G) heap[eltIdx];
-            G child = (G) heap[childIdx];
-            if (childIdx + 1 < end && child.compareTo(heap[childIdx+1]) < 0)
-                child = (G) heap[++childIdx];
-            if (elt.compareTo(child) >= 0)
-                return;
-            swap(eltIdx, childIdx);
-            eltIdx = childIdx;
-            childIdx = eltIdx * 2 + 1;
-        }
-    }
+
     @Override
     public G removeFirst() {
         if (this.isEmpty())
@@ -56,13 +26,26 @@ public class PrioritetnaVrsta<G extends Comparable> implements Seznam<G> {
     }
 
     @Override
-    public G remove() {
-        throw new RuntimeException("Not implemented");
+    public G remove(G e) {
+        if (this.isEmpty())
+            throw new java.lang.NullPointerException();
+
+        for (int i = 0; i < end; i++)
+            if (heap[i].equals(e)) {
+                swap(i, --end);
+                bubbleDown(i);
+                return (G) heap[i];
+            }
+
+        throw new java.util.NoSuchElementException();
     }
 
     @Override
-    public G get() {
-        throw new RuntimeException("Not implemented");
+    public boolean exists(G e) {
+        for (int i = 0; i < end; i++)
+            if (heap[i].equals(e))
+                return true;
+        return false;
     }
 
     @Override
@@ -93,5 +76,38 @@ public class PrioritetnaVrsta<G extends Comparable> implements Seznam<G> {
         Object tmp = heap[i];
         heap[i] = heap[j];
         heap[j] = tmp;
+    }
+
+    private void bubbleUp() {
+        int eltIdx = end - 1;
+        while (eltIdx >= 0) {
+            G elt = (G) heap[eltIdx];
+            int childIdx = eltIdx * 2 + 1;
+            if (childIdx < end) {
+                G child = (G) heap[childIdx];
+                if (childIdx + 1 < end && child.compareTo(heap[childIdx+1]) < 0)
+                    child = (G) heap[++childIdx];
+                if (elt.compareTo(child) >= 0)
+                    return;
+                swap(eltIdx, childIdx);
+            }
+            eltIdx = eltIdx % 2 == 1 ? (eltIdx - 1) / 2 : (eltIdx - 2) / 2;
+        }
+    }
+
+    private void bubbleDown(int start) {
+        int eltIdx = start;
+        int childIdx = eltIdx * 2 + 1;
+        while (childIdx < end) {
+            G elt = (G) heap[eltIdx];
+            G child = (G) heap[childIdx];
+            if (childIdx + 1 < end && child.compareTo(heap[childIdx+1]) < 0)
+                child = (G) heap[++childIdx];
+            if (elt.compareTo(child) >= 0)
+                return;
+            swap(eltIdx, childIdx);
+            eltIdx = childIdx;
+            childIdx = eltIdx * 2 + 1;
+        }
     }
 }

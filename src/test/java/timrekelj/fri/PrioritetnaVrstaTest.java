@@ -174,4 +174,47 @@ public class PrioritetnaVrstaTest {
         pv.add("Test2");
         assertFalse(pv.isEmpty());
     }
+
+    @Test
+    public void testRemove() {
+        pv.add("Test1");
+        pv.add("Test2");
+        pv.add("Test3");
+        assertEquals(pv.remove("Test2"), "Test2");
+        assertEquals(pv.size(), 2);
+    }
+
+    @Test
+    public void testRemoveNotFound() {
+        pv.add("Test1");
+        pv.add("Test2");
+        pv.add("Test3");
+        assertThrows(java.util.NoSuchElementException.class, () -> pv.remove("Test"));
+    }
+
+    @Test
+    public void testRemoveEmpty() {
+        assertThrows(java.util.NoSuchElementException.class, () -> pv.remove("Test"));
+    }
+
+    @Test
+    public void testExists() {
+        pv.add("Test1");
+        pv.add("Test2");
+        pv.add("Test3");
+        assertTrue(pv.exists("Test2"));
+    }
+
+    @Test
+    public void testExistsFalse() {
+        pv.add("Test1");
+        pv.add("Test2");
+        pv.add("Test3");
+        assertFalse(pv.exists("Test4"));
+    }
+
+    @Test
+    public void testExistsEmpty() {
+        assertFalse(pv.exists("Test"));
+    }
 }

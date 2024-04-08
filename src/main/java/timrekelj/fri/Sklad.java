@@ -1,5 +1,7 @@
 package timrekelj.fri;
 
+import java.lang.ref.WeakReference;
+
 public class Sklad<G> implements Seznam<G> {
     private int size;
     private Element<G> root;
@@ -28,8 +30,38 @@ public class Sklad<G> implements Seznam<G> {
     }
 
     @Override
-    public G remove() {
-        throw new RuntimeException("Not implemented");
+    public G remove(G e) {
+        if (root == null) {
+            throw new java.lang.NullPointerException();
+        }
+
+        G res;
+        Element<G> current = root;
+        while (current.next != null) {
+            System.out.println(current.next.value + " " + e);
+            if (current.next.value.equals(e)) {
+                res = e;
+                current.next = current.next.next;
+                size--;
+                return res;
+            }
+            current = current.next;
+        }
+        throw new java.util.NoSuchElementException();
+    }
+
+    @Override
+    public boolean exists(G e) {
+        if (root == null)
+            return false;
+
+        Element<G> current = root;
+        while (current.next != null) {
+            if (current.value.equals(e))
+                return true;
+            current = current.next;
+        }
+        return false;
     }
 
     @Override
@@ -41,18 +73,13 @@ public class Sklad<G> implements Seznam<G> {
     }
 
     @Override
-    public G get() {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
     public int size() {
         return size;
     }
 
     @Override
     public int depth() {
-        throw new RuntimeException("Not implemented");
+        return size;
     }
 
     @Override
@@ -62,11 +89,12 @@ public class Sklad<G> implements Seznam<G> {
 
     public int search(G value) {
         int count = 0;
-        while (root != null) {
-            if (root.value.equals(value)) {
+        Element<G> current = root;
+        while (current != null) {
+            if (current.value.equals(value)) {
                 return count;
             }
-            root = root.next;
+            current = current.next;
             count++;
         }
         return -1;
