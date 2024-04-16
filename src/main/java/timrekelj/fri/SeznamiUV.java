@@ -78,15 +78,16 @@ public class SeznamiUV {
                 if (value.charAt(0) == '\"') {
                     while (sc.hasNext()) {
                         value += " " + sc.next();
-                        if (value.charAt(value.length()-1) == '\"')
-                            try {
-                                result = seznam.remove(value.substring(0, value.length()));
-                            } catch (Exception e) {
-                                if (e instanceof java.util.NoSuchElementException)
-                                    result = "Error: element not found";
-                                else if (e instanceof java.lang.NullPointerException)
-                                    result = "Error: data structure is empty";
-                            }
+                        if (value.charAt(value.length()-1) != '\"')
+                            continue;
+                        try {
+                            result = seznam.remove(value.substring(1, value.length() - 1));
+                        } catch (Exception e) {
+                            if (e instanceof java.util.NoSuchElementException)
+                                result = "Error: element not found";
+                            else
+                                result = "Error: data structure is empty";
+                        }
                     }
                     if (value.charAt(value.length()-1) != '\"')
                         result = "Error: invalid string";
@@ -97,7 +98,7 @@ public class SeznamiUV {
                 } catch (Exception e) {
                     if (e instanceof java.util.NoSuchElementException)
                         result = "Error: element not found";
-                    else if (e instanceof java.lang.NullPointerException)
+                    else
                         result = "Error: data structure is empty";
                 }
                 break;

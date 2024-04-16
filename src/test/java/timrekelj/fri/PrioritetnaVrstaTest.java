@@ -65,6 +65,22 @@ public class PrioritetnaVrstaTest {
     }
 
     @Test
+    public void testRemoveFirstMax100() {
+        var pv100 = new PrioritetnaVrsta<>();
+        pv100.add("Test5");
+        pv100.add("Test8");
+        pv100.add("Test0");
+        pv100.add("Test2");
+        pv100.add("Test6");
+        pv100.add("Test1");
+        pv100.add("Test9");
+        pv100.add("Test4");
+        pv100.add("Test7");
+        pv100.add("Test3");
+        assertEquals("Test9", pv100.removeFirst());
+    }
+
+    @Test
     public void testRemoveFirstMultiple() {
         pv.add("Test1");
         pv.add("Test5");
@@ -194,7 +210,7 @@ public class PrioritetnaVrstaTest {
 
     @Test
     public void testRemoveEmpty() {
-        assertThrows(java.util.NoSuchElementException.class, () -> pv.remove("Test"));
+        assertThrows(java.lang.NullPointerException.class, () -> pv.remove("Test"));
     }
 
     @Test

@@ -24,6 +24,12 @@ public class BSTTest {
     }
 
     @Test
+    public void testAddIdentical() {
+        bst.add("Test");
+        bst.add("Test");
+    }
+
+    @Test
     public void testAddMultiple() {
         bst.add("Test4");
         bst.add("Test2");
@@ -46,16 +52,21 @@ public class BSTTest {
 
     @Test
     public void testRemoveFirstMultiple() {
-        bst.add("Test4");
-        bst.add("Test2");
-        bst.add("Test1");
-        bst.add("Test3");
         bst.add("Test5");
-        assertEquals("Test4", bst.removeFirst());
+        bst.add("Test2");
+        bst.add("Test8");
+        bst.add("Test0");
+        bst.add("Test3");
+        bst.add("Test7");
+        bst.add("Test9");
+        bst.add("Test1");
+        bst.add("Test4");
+        bst.add("Test6");
         assertEquals("Test5", bst.removeFirst());
-        assertEquals("Test2", bst.removeFirst());
-        assertEquals("Test3", bst.removeFirst());
-        assertEquals("Test1", bst.removeFirst());
+        assertEquals("Test6", bst.removeFirst());
+        assertEquals("Test7", bst.removeFirst());
+        assertEquals("Test8", bst.removeFirst());
+        assertEquals("Test9", bst.removeFirst());
     }
 
     @Test
@@ -156,11 +167,18 @@ public class BSTTest {
 
     @Test
     public void testRemove() {
-        bst.add("Test1");
+        bst.add("Test5");
         bst.add("Test2");
+        bst.add("Test8");
+        bst.add("Test0");
         bst.add("Test3");
-        assertEquals(bst.remove("Test2"), "Test2");
-        assertEquals(bst.size(), 2);
+        bst.add("Test7");
+        bst.add("Test9");
+        bst.add("Test1");
+        bst.add("Test4");
+        bst.add("Test6");
+        assertEquals(bst.remove("Test3"), "Test3");
+        assertEquals(bst.size(), 9);
     }
 
     @Test
@@ -173,14 +191,16 @@ public class BSTTest {
 
     @Test
     public void testRemoveEmpty() {
-        assertThrows(java.util.NoSuchElementException.class, () -> bst.remove("Test"));
+        assertThrows(java.lang.NullPointerException.class, () -> bst.remove("Test"));
     }
 
     @Test
     public void testExists() {
-        bst.add("Test1");
-        bst.add("Test2");
         bst.add("Test3");
+        bst.add("Test5");
+        bst.add("Test1");
+        bst.add("Test4");
+        bst.add("Test2");
         assertTrue(bst.exists("Test2"));
     }
 

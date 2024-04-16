@@ -1,0 +1,349 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > BST</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">timrekelj.fri</a>
+</div>
+
+<h1>Coverage Summary for Class: BST (timrekelj.fri)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BST</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (46/46)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (77/77)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BST$Direction</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BST$ElementBST</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (46/46)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (84/84)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package timrekelj.fri;
+&nbsp;
+&nbsp;public class BST&lt;G extends Comparable&gt; implements Seznam&lt;G&gt;{
+&nbsp;    private ElementBST&lt;G&gt; root;
+&nbsp;
+<b class="fc">&nbsp;    public BST() {</b>
+<b class="fc">&nbsp;        root = null;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    enum Direction {</b>
+<b class="fc">&nbsp;        LEFT, RIGHT</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void insert(G e, ElementBST&lt;G&gt; current, ElementBST&lt;G&gt; parent, Direction direction) {
+<b class="fc">&nbsp;        if (current == null) {</b>
+<b class="fc">&nbsp;            if (parent == null) {</b>
+<b class="fc">&nbsp;                root = new ElementBST&lt;&gt;(e, null);</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;            if (direction == Direction.LEFT) {</b>
+<b class="fc">&nbsp;                parent.leftChild = new ElementBST&lt;&gt;(e, parent);</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                parent.rightChild = new ElementBST&lt;&gt;(e, parent);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            current = new ElementBST&lt;&gt;(e, parent);</b>
+<b class="fc">&nbsp;            current.parent = parent;</b>
+<b class="fc">&nbsp;        } else if (e.compareTo(current.value) &lt; 0) {</b>
+<b class="fc">&nbsp;            insert(e, current.leftChild, current, Direction.LEFT);</b>
+<b class="fc">&nbsp;        } else if (e.compareTo(current.value) &gt; 0) {</b>
+<b class="fc">&nbsp;            insert(e, current.rightChild, current, Direction.RIGHT);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public G delete(G e, ElementBST&lt;G&gt; current) {
+<b class="fc">&nbsp;        if (current == null) {</b>
+<b class="fc">&nbsp;            throw new java.util.NoSuchElementException();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        G res;
+<b class="fc">&nbsp;        if (e.compareTo(current.value) &lt; 0) {</b>
+<b class="fc">&nbsp;            return delete(e, current.leftChild);</b>
+<b class="fc">&nbsp;        } else if (e.compareTo(current.value) &gt; 0) {</b>
+<b class="fc">&nbsp;            return delete(e, current.rightChild);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            if (current.leftChild == null) {</b>
+<b class="fc">&nbsp;                res = current.value;</b>
+<b class="fc">&nbsp;                replace(current, current.rightChild);</b>
+<b class="fc">&nbsp;                return res;</b>
+<b class="fc">&nbsp;            } else if (current.rightChild == null) {</b>
+<b class="fc">&nbsp;                res = current.value;</b>
+<b class="fc">&nbsp;                replace(current, current.leftChild);</b>
+<b class="fc">&nbsp;                return res;</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                ElementBST&lt;G&gt; min = findMin(current.rightChild);</b>
+<b class="fc">&nbsp;                res = current.value;</b>
+<b class="fc">&nbsp;                current.value = min.value;</b>
+<b class="fc">&nbsp;                delete(min.value, current.rightChild);</b>
+<b class="fc">&nbsp;                return res;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public ElementBST&lt;G&gt; findMin(ElementBST&lt;G&gt; current) {
+<b class="fc">&nbsp;        if (current.leftChild == null) {</b>
+<b class="fc">&nbsp;            return current;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return findMin(current.leftChild);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void replace(ElementBST&lt;G&gt; current, ElementBST&lt;G&gt; replacement) {
+<b class="fc">&nbsp;        if (current.parent == null) {</b>
+<b class="fc">&nbsp;            root = replacement;</b>
+<b class="fc">&nbsp;        } else if (current == current.parent.leftChild) {</b>
+<b class="fc">&nbsp;            current.parent.leftChild = replacement;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            current.parent.rightChild = replacement;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (replacement != null) {</b>
+<b class="fc">&nbsp;            replacement.parent = current.parent;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void add(G e) {
+<b class="fc">&nbsp;        insert(e, root, null, null);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public G removeFirst() {
+<b class="fc">&nbsp;        if (root == null) {</b>
+<b class="fc">&nbsp;            throw new java.util.NoSuchElementException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return delete(root.value, root);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public G getFirst() {
+<b class="fc">&nbsp;        if (root == null) {</b>
+<b class="fc">&nbsp;            throw new java.util.NoSuchElementException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return root.value;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int countNodes(ElementBST&lt;G&gt; node) {
+<b class="fc">&nbsp;        if (node == null)</b>
+<b class="fc">&nbsp;            return 0;</b>
+&nbsp;        else {
+<b class="fc">&nbsp;            int count = 1;</b>
+<b class="fc">&nbsp;            count += countNodes(node.leftChild);</b>
+<b class="fc">&nbsp;            count += countNodes(node.rightChild);</b>
+<b class="fc">&nbsp;            return count;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int size() {
+<b class="fc">&nbsp;        return countNodes(root);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int getDepth(ElementBST&lt;G&gt; node) {
+<b class="fc">&nbsp;        if (node == null)</b>
+<b class="fc">&nbsp;            return 0;</b>
+&nbsp;        else {
+<b class="fc">&nbsp;            int lDepth = getDepth(node.leftChild);</b>
+<b class="fc">&nbsp;            int rDepth = getDepth(node.rightChild);</b>
+<b class="fc">&nbsp;            if (lDepth &gt; rDepth)</b>
+<b class="fc">&nbsp;                return (lDepth + 1);</b>
+&nbsp;            else
+<b class="fc">&nbsp;                return (rDepth + 1);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int depth() {
+<b class="fc">&nbsp;        return getDepth(root);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean isEmpty() {
+<b class="fc">&nbsp;        return countNodes(root) == 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public G remove(G e) {
+<b class="fc">&nbsp;        if (root == null) {</b>
+<b class="fc">&nbsp;            throw new java.lang.NullPointerException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return delete(e, root);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean exists(G e) {
+<b class="fc">&nbsp;        ElementBST&lt;G&gt; current = root;</b>
+<b class="fc">&nbsp;        while (current != null) {</b>
+<b class="fc">&nbsp;            if (e.compareTo(current.value) == 0) {</b>
+<b class="fc">&nbsp;                return true;</b>
+<b class="fc">&nbsp;            } else if (e.compareTo(current.value) &lt; 0) {</b>
+<b class="fc">&nbsp;                current = current.leftChild;</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                current = current.rightChild;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private class ElementBST&lt;G&gt; {
+&nbsp;        G value;
+&nbsp;        ElementBST&lt;G&gt; leftChild;
+&nbsp;        ElementBST&lt;G&gt; rightChild;
+&nbsp;        ElementBST&lt;G&gt; parent;
+&nbsp;
+<b class="fc">&nbsp;        public ElementBST(G value, ElementBST&lt;G&gt; parent) {</b>
+<b class="fc">&nbsp;            this.value = value;</b>
+<b class="fc">&nbsp;            this.parent = parent;</b>
+<b class="fc">&nbsp;            this.leftChild = null;</b>
+<b class="fc">&nbsp;            this.rightChild = null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-16 18:15</div>
+</div>
+</body>
+</html>

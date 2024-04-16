@@ -22,6 +22,12 @@ public class SeznamUVTest {
         assertEquals("Error: please specify a correct data structure type (sk, pv, bst)", uv.processInput("use test"));
     }
 
+    @Test
+    public void testWrongCommand() {
+        System.out.println("testWrongCommand");
+        assertEquals("Error: Invalid command", uv.processInput("wrong command"));
+    }
+
     /////////////////////////////////// SKLAD ///////////////////////////////////
     @Test
     public void s_testAddBasic() {
@@ -29,6 +35,13 @@ public class SeznamUVTest {
         System.out.println("s_testAddBasic");
         assertEquals("OK", uv.processInput("add Test1"));
         assertEquals("OK", uv.processInput("add Test2"));
+    }
+
+    @Test
+    public void s_testAddInvalidString() {
+        uv.processInput("use sk");
+        System.out.println("s_testAddInvalidString");
+        assertEquals("Error: invalid string", uv.processInput("add \"Test"));
     }
 
     @Test
@@ -232,6 +245,13 @@ public class SeznamUVTest {
     }
 
     @Test
+    public void s_testSearchWrongDataType() {
+        uv.processInput("use pv");
+        System.out.println("s_testSearchWrongDataType");
+        assertEquals("Error: invalid data structure type", uv.processInput("search Test"));
+    }
+
+    @Test
     public void s_testSearchSuccess() {
         uv.processInput("use sk");
         System.out.println("s_testSearchSuccess");
@@ -350,6 +370,13 @@ public class SeznamUVTest {
         uv.processInput("use pv");
         System.out.println("pq_testDepthEmpty");
         assertEquals("0", uv.processInput("depth"));
+    }
+
+    @Test
+    public void pq_testDepthWrongDataType() {
+        uv.processInput("use sk");
+        System.out.println("pq_testDepthWrongDataType");
+        assertEquals("Error: invalid data structure type", uv.processInput("depth"));
     }
 
     @Test
@@ -645,6 +672,40 @@ public class SeznamUVTest {
         uv.processInput("use bst");
         System.out.println("b_testRemoveNoString");
         assertEquals("Error: please specify a string", uv.processInput("remove"));
+    }
+
+    @Test
+    public void b_testRemoveMultipleWordsNotFound() {
+        uv.processInput("use bst");
+        System.out.println("b_testRemoveMultipleWordsNotFound");
+        uv.processInput("add \"1 test\"");
+        assertEquals("Error: element not found", uv.processInput("remove \"2 test\""));
+    }
+
+    @Test
+    public void b_testRemoveMultipleWordsInvalidString() {
+        uv.processInput("use bst");
+        System.out.println("b_testRemoveMultipleWordsInvalidString");
+        uv.processInput("add \"1 test\"");
+        assertEquals("Error: invalid string", uv.processInput("remove \"test"));
+    }
+
+    @Test
+    public void b_testRemoveMultipleWordsEmpty() {
+        uv.processInput("use bst");
+        System.out.println("b_testRemoveMultipleWordsEmpty");
+        assertEquals("Error: data structure is empty", uv.processInput("remove \"test test\""));
+    }
+
+    @Test
+    public void b_testRemoveMultipleWords() {
+        uv.processInput("use bst");
+        System.out.println("b_testRemoveMultipleWords");
+        uv.processInput("add \"1 test test\"");
+        uv.processInput("add \"2 test test\"");
+        uv.processInput("add \"3 test test\"");
+        uv.processInput("add \"4 test test\"");
+        assertEquals("1 test test", uv.processInput("remove \"1 test test\""));
     }
 
     @Test

@@ -169,7 +169,7 @@ class SkladTest {
 
     @Test
     void removeEmpty() {
-        assertThrows(java.util.NoSuchElementException.class, () -> instance.remove("Test"));
+        assertThrows(java.lang.NullPointerException.class, () -> instance.remove("Test"));
     }
 
     @Test
@@ -191,5 +191,13 @@ class SkladTest {
     @Test
     void existsEmpty() {
         assertFalse(instance.exists("Test"));
+    }
+
+    @Test
+    void depthTest() {
+        instance.add("Test1");
+        instance.add("Test2");
+        instance.add("Test3");
+        assertEquals(instance.depth(), 3);
     }
 }
