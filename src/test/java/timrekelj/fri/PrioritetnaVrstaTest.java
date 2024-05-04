@@ -233,4 +233,29 @@ public class PrioritetnaVrstaTest {
     public void testExistsEmpty() {
         assertFalse(pv.exists("Test"));
     }
+
+    @Test
+    public void testAsList() {
+        pv.add("Test1");
+        pv.add("Test5");
+        pv.add("Test2");
+        pv.add("Test3");
+        pv.add("Test0");
+        pv.add("Test8");
+        pv.add("Test9");
+        pv.add("Test6");
+        pv.add("Test7");
+        pv.add("Test4");
+        var list = pv.asList();
+        assertEquals(list.get(0), "Test9");
+        assertEquals(list.get(1), "Test7");
+        assertEquals(list.get(2), "Test8");
+        assertEquals(list.get(3), "Test6");
+        assertEquals(list.get(4), "Test4");
+        assertEquals(list.get(5), "Test2");
+        assertEquals(list.get(6), "Test5");
+        assertEquals(list.get(7), "Test1");
+        assertEquals(list.get(8), "Test3");
+        assertEquals(list.get(9), "Test0");
+    }
 }

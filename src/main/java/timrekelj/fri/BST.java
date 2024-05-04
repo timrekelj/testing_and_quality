@@ -164,6 +164,21 @@ public class BST<G extends Comparable> implements Seznam<G>{
         return false;
     }
 
+    @Override
+    public java.util.List<G> asList() {
+        java.util.List<G> list = new java.util.ArrayList<>();
+        inOrder(root, list);
+        return list;
+    }
+
+    private void inOrder(ElementBST<G> current, java.util.List<G> list) {
+        if (current != null) {
+            inOrder(current.leftChild, list);
+            list.add(current.value);
+            inOrder(current.rightChild, list);
+        }
+    }
+
     private class ElementBST<G> {
         G value;
         ElementBST<G> leftChild;

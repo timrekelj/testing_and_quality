@@ -1,6 +1,7 @@
 package timrekelj.fri;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class SeznamiUV {
@@ -11,6 +12,7 @@ public class SeznamiUV {
         seznami.put("sk", new Sklad<>());
         seznami.put("pv", new PrioritetnaVrsta<>());
         seznami.put("bst", new BST<>());
+        seznami.put("bk", new BinomskaKopica<>());
         seznam = seznami.get("sk");
     }
 
@@ -24,9 +26,9 @@ public class SeznamiUV {
                 if (sc.hasNext()) {
                     seznam = seznami.get(sc.next());
                     if (null == seznam)
-                        result = "Error: please specify a correct data structure type (sk, pv, bst)";
+                        result = "Error: please specify a correct data structure type (sk, pv, bst, bk)";
                 }
-                else result = "Error: please specify a data structure type (sk, pv, bst)";
+                else result = "Error: please specify a data structure type (sk, pv, bst, bk)";
                 break;
             case "add":
                 if (!sc.hasNext()) {
@@ -61,7 +63,7 @@ public class SeznamiUV {
                 result = String.valueOf(seznam.size());
                 break;
             case "depth":
-                if (seznam instanceof BST || seznam instanceof PrioritetnaVrsta)
+                if (seznam instanceof BST || seznam instanceof PrioritetnaVrsta || seznam instanceof BinomskaKopica)
                     result = String.valueOf(seznam.depth());
                 else
                     result = "Error: invalid data structure type";
@@ -123,6 +125,17 @@ public class SeznamiUV {
             case "reset":
                 while (!seznam.isEmpty())
                     seznam.removeFirst();
+                break;
+            case "asList":
+                result = "[";
+                List<String> list = seznam.asList();
+                for (int i = 0; i < list.size(); i++) {
+                    if (i == list.size() - 1)
+                        result += list.get(i);
+                    else
+                        result += list.get(i) + ", ";
+                }
+                result += "]";
                 break;
             default:
                 result = "Error: Invalid command";

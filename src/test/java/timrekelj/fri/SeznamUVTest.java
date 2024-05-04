@@ -18,8 +18,8 @@ public class SeznamUVTest {
         assertEquals("OK", uv.processInput("use sk"));
         assertEquals("OK", uv.processInput("use pv"));
         assertEquals("OK", uv.processInput("use bst"));
-        assertEquals("Error: please specify a data structure type (sk, pv, bst)", uv.processInput("use"));
-        assertEquals("Error: please specify a correct data structure type (sk, pv, bst)", uv.processInput("use test"));
+        assertEquals("Error: please specify a data structure type (sk, pv, bst, bk)", uv.processInput("use"));
+        assertEquals("Error: please specify a correct data structure type (sk, pv, bst, bk)", uv.processInput("use test"));
     }
 
     @Test
@@ -279,6 +279,26 @@ public class SeznamUVTest {
         assertEquals("0", uv.processInput("size"));
     }
 
+    @Test
+    public void s_testAsList() {
+        uv.processInput("use sk");
+        System.out.println("s_testAsList");
+        uv.processInput("add Test5");
+        uv.processInput("add Test2");
+        uv.processInput("add Test8");
+        uv.processInput("add Test0");
+        uv.processInput("add Test3");
+        uv.processInput("add Test7");
+        uv.processInput("add Test9");
+        uv.processInput("add Test1");
+        uv.processInput("add Test4");
+        uv.processInput("add Test6");
+        assertEquals(
+            "[Test6, Test4, Test1, Test9, Test7, Test3, Test0, Test8, Test2, Test5]",
+            uv.processInput("asList")
+        );
+    }
+
     /////////////////////////////////// PRIORITETNA VRSTA ///////////////////////////////////
     @Test
     public void pq_testAddBasic() {
@@ -500,6 +520,26 @@ public class SeznamUVTest {
         uv.processInput("add Test2");
         uv.processInput("add Test3");
         assertEquals("Element exists", uv.processInput("exists Test2"));
+    }
+
+    @Test
+    public void pq_testAsList() {
+        uv.processInput("use pv");
+        System.out.println("pq_testAsList");
+        uv.processInput("add Test1");
+        uv.processInput("add Test5");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        uv.processInput("add Test0");
+        uv.processInput("add Test8");
+        uv.processInput("add Test9");
+        uv.processInput("add Test6");
+        uv.processInput("add Test7");
+        uv.processInput("add Test4");
+        assertEquals(
+            "[Test9, Test7, Test8, Test6, Test4, Test2, Test5, Test1, Test3, Test0]",
+            uv.processInput("asList")
+        );
     }
 
     /////////////////////////////////// BINARNO DREVO ///////////////////////////////////
@@ -750,5 +790,295 @@ public class SeznamUVTest {
         uv.processInput("add Test2");
         uv.processInput("add Test3");
         assertEquals("Element exists", uv.processInput("exists Test2"));
+    }
+
+    @Test
+    public void b_testAsList() {
+        uv.processInput("use bst");
+        System.out.println("b_testAsList");
+        uv.processInput("add Test1");
+        uv.processInput("add Test5");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        uv.processInput("add Test0");
+        uv.processInput("add Test8");
+        uv.processInput("add Test9");
+        uv.processInput("add Test6");
+        uv.processInput("add Test7");
+        uv.processInput("add Test4");
+        assertEquals(
+            "[Test0, Test1, Test2, Test3, Test4, Test5, Test6, Test7, Test8, Test9]",
+            uv.processInput("asList")
+        );
+    }
+
+    /////////////////////////////////// BINOMSKA KOPICA ///////////////////////////////////
+    @Test
+    public void bk_testAddBasic() {
+        uv.processInput("use bk");
+        System.out.println("bk_testAddBasic");
+        assertEquals("OK", uv.processInput("add Test1"));
+        assertEquals("OK", uv.processInput("add Test2"));
+    }
+
+    @Test
+    public void bk_testAddNothing() {
+        uv.processInput("use bk");
+        System.out.println("bk_testAddNothing");
+        assertEquals("Error: please specify a string", uv.processInput("add"));
+    }
+
+    @Test
+    public void bk_testRemoveFirstBasic() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveFirstBasic");
+        assertEquals("OK", uv.processInput("add Test1"));
+        assertEquals("OK", uv.processInput("add Test2"));
+        assertEquals("Test2", uv.processInput("remove_first"));
+        assertEquals("Test1", uv.processInput("remove_first"));
+    }
+
+    @Test
+    public void bk_testRemoveFirstNothing() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveFirstNothing");
+        assertEquals("Error: data structure is empty", uv.processInput("remove_first"));
+        assertEquals("Error: please specify a string", uv.processInput("add"));
+        assertEquals("Error: data structure is empty", uv.processInput("remove_first"));
+    }
+
+    @Test
+    public void bk_testGetFirstNothing() {
+        uv.processInput("use bk");
+        System.out.println("bk_testGetFirstNothing");
+        assertEquals("Error: data structure is empty", uv.processInput("get_first"));
+        assertEquals("Error: please specify a string", uv.processInput("add"));
+        assertEquals("Error: data structure is empty", uv.processInput("get_first"));
+    }
+
+    @Test
+    public void bk_testGetFirstFull() {
+        uv.processInput("use bk");
+        System.out.println("bk_testGetFirstFull");
+        uv.processInput("add Test");
+        assertEquals("Test", uv.processInput("get_first"));
+    }
+
+    @Test
+    public void bk_testGetFirstWithRemoveFirst() {
+        uv.processInput("use bk");
+        System.out.println("bk_testGetFirstFull");
+        uv.processInput("add Test1");
+        uv.processInput("add Test2");
+        uv.processInput("remove_first");
+        assertEquals("Test1", uv.processInput("get_first"));
+    }
+
+    @Test
+    public void bk_testSizeEmpty() {
+        uv.processInput("use bk");
+        System.out.println("bk_testSizeEmpty");
+        assertEquals("0", uv.processInput("size"));
+    }
+
+    @Test
+    public void bk_testSizeOne() {
+        uv.processInput("use bk");
+        System.out.println("bk_testSizeOne");
+        uv.processInput("add Test");
+        assertEquals("1", uv.processInput("size"));
+    }
+
+    @Test
+    public void bk_testSizeTwo() {
+        uv.processInput("use bk");
+        System.out.println("bk_testSizeTwo");
+        uv.processInput("add Test1");
+        uv.processInput("add Test2");
+        assertEquals("2", uv.processInput("size"));
+    }
+
+    @Test
+    public void bk_testDepthEmpty() {
+        uv.processInput("use bk");
+        System.out.println("bk_testDepthEmpty");
+        assertEquals("0", uv.processInput("depth"));
+    }
+
+    @Test
+    public void bk_testDepthOne() {
+        uv.processInput("use bk");
+        System.out.println("bk_testDepthOne");
+        uv.processInput("add Test");
+        assertEquals("1", uv.processInput("depth"));
+    }
+
+    @Test
+    public void bk_testDepthMultiple() {
+        uv.processInput("use bk");
+        System.out.println("bk_testDepthMultiple");
+        uv.processInput("add Test1");
+        assertEquals("1", uv.processInput("depth"));
+        uv.processInput("add Test5");
+        assertEquals("2", uv.processInput("depth"));
+        uv.processInput("add Test2");
+        assertEquals("2", uv.processInput("depth"));
+        uv.processInput("add Test3");
+        assertEquals("3", uv.processInput("depth"));
+        uv.processInput("add Test0");
+        assertEquals("3", uv.processInput("depth"));
+        uv.processInput("add Test8");
+        assertEquals("3", uv.processInput("depth"));
+        uv.processInput("add Test9");
+        assertEquals("3", uv.processInput("depth"));
+        uv.processInput("add Test6");
+        assertEquals("4", uv.processInput("depth"));
+    }
+
+    @Test
+    public void bk_testIsEmptyEmpty() {
+        uv.processInput("use bk");
+        System.out.println("bk_testIsEmptyEmpty");
+        assertEquals("Data structure is empty", uv.processInput("is_empty"));
+    }
+
+    @Test
+    public void bk_testIsEmptyOne() {
+        uv.processInput("use bk");
+        System.out.println("bk_testIsEmptyOne");
+        uv.processInput("add Test");
+        assertEquals("Data structure is not empty", uv.processInput("is_empty"));
+    }
+
+    @Test
+    public void bk_testIsEmptyWithRemoveFirst() {
+        uv.processInput("use bk");
+        System.out.println("bk_testIsEmptyOne");
+        uv.processInput("add Test");
+        assertEquals("Data structure is not empty", uv.processInput("is_empty"));
+        uv.processInput("remove_first");
+        assertEquals("Data structure is empty", uv.processInput("is_empty"));
+    }
+
+    @Test
+    public void bk_testRemoveEmpty() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveEmpty");
+        assertEquals("Error: data structure is empty", uv.processInput("remove Test"));
+    }
+
+    @Test
+    public void bk_testRemoveNotFound() {
+        uv.processInput("use bk");
+        System.out.println("s_testRemoveNotFound");
+        uv.processInput("add Test1");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        assertEquals("Error: element not found", uv.processInput("remove Test0"));
+    }
+
+    @Test
+    public void bk_testRemoveNoString() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveNoString");
+        assertEquals("Error: please specify a string", uv.processInput("remove"));
+    }
+
+    @Test
+    public void bk_testRemoveMultipleWordsNotFound() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveMultipleWordsNotFound");
+        uv.processInput("add \"1 test\"");
+        assertEquals("Error: element not found", uv.processInput("remove \"2 test\""));
+    }
+
+    @Test
+    public void bk_testRemoveMultipleWordsInvalidString() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveMultipleWordsInvalidString");
+        uv.processInput("add \"1 test\"");
+        assertEquals("Error: invalid string", uv.processInput("remove \"test"));
+    }
+
+    @Test
+    public void bk_testRemoveMultipleWordsEmpty() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveMultipleWordsEmpty");
+        assertEquals("Error: data structure is empty", uv.processInput("remove \"test test\""));
+    }
+
+    @Test
+    public void bk_testRemoveMultipleWords() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveMultipleWords");
+        uv.processInput("add \"1 test test\"");
+        uv.processInput("add \"2 test test\"");
+        uv.processInput("add \"3 test test\"");
+        uv.processInput("add \"4 test test\"");
+        assertEquals("1 test test", uv.processInput("remove \"1 test test\""));
+    }
+
+    @Test
+    public void bk_testRemoveSuccess() {
+        uv.processInput("use bk");
+        System.out.println("bk_testRemoveSuccess");
+        uv.processInput("add Test1");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        assertEquals("Test2", uv.processInput("remove Test2"));
+    }
+
+    @Test
+    public void bk_testExistsEmpty() {
+        uv.processInput("use bk");
+        System.out.println("bk_testExistsEmpty");
+        assertEquals("Element does not exist", uv.processInput("exists Test"));
+    }
+
+    @Test
+    public void bk_testExistsNotFound() {
+        uv.processInput("use bk");
+        System.out.println("bk_testExistsNotFound");
+        uv.processInput("add Test1");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        assertEquals("Element does not exist", uv.processInput("exists Test0"));
+    }
+
+    @Test
+    public void bk_testExistsNoString() {
+        uv.processInput("use bk");
+        System.out.println("bk_testExistsNoString");
+        assertEquals("Error: please specify a string", uv.processInput("exists"));
+    }
+
+    @Test
+    public void bk_testExistsSuccess() {
+        uv.processInput("use bk");
+        System.out.println("bk_testExistsSuccess");
+        uv.processInput("add Test1");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        assertEquals("Element exists", uv.processInput("exists Test2"));
+    }
+
+    @Test
+    public void bk_testAsList() {
+        uv.processInput("use bk");
+        System.out.println("bk_testAsList");
+        uv.processInput("add Test1");
+        uv.processInput("add Test5");
+        uv.processInput("add Test2");
+        uv.processInput("add Test3");
+        uv.processInput("add Test0");
+        uv.processInput("add Test8");
+        uv.processInput("add Test9");
+        uv.processInput("add Test6");
+        uv.processInput("add Test7");
+        uv.processInput("add Test4");
+        assertEquals(
+                "[Test7, Test4, Test9, Test5, Test3, Test2, Test1, Test8, Test0, Test6]",
+                uv.processInput("asList")
+        );
     }
 }

@@ -72,6 +72,15 @@ public class PrioritetnaVrsta<G extends Comparable> implements Seznam<G> {
         return end;
     }
 
+    @Override
+    public java.util.List<G> asList() {
+        java.util.List<G> list = new java.util.ArrayList<>();
+        for (int i = 0; i < end; i++) {
+            list.add((G) heap[i]);
+        }
+        return list;
+    }
+
     private void swap(int i, int j) {
         Object tmp = heap[i];
         heap[i] = heap[j];

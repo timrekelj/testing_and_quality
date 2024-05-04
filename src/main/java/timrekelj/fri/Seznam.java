@@ -1,5 +1,7 @@
 package timrekelj.fri;
 
+import java.util.List;
+
 public interface Seznam<G> {
     void add(G e);
     G removeFirst();
@@ -9,4 +11,5 @@ public interface Seznam<G> {
     boolean isEmpty();
     G remove(G e);
     boolean exists(G e);
+    List<G> asList();
 }

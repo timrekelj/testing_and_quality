@@ -3,6 +3,8 @@ package timrekelj.fri;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SkladTest {
@@ -199,5 +201,30 @@ class SkladTest {
         instance.add("Test2");
         instance.add("Test3");
         assertEquals(instance.depth(), 3);
+    }
+
+    @Test
+    public void testAsList() {
+        instance.add("Test5");
+        instance.add("Test2");
+        instance.add("Test8");
+        instance.add("Test0");
+        instance.add("Test3");
+        instance.add("Test7");
+        instance.add("Test9");
+        instance.add("Test1");
+        instance.add("Test4");
+        instance.add("Test6");
+        List<String> list = instance.asList();
+        assertEquals(list.get(0), "Test6");
+        assertEquals(list.get(1), "Test4");
+        assertEquals(list.get(2), "Test1");
+        assertEquals(list.get(3), "Test9");
+        assertEquals(list.get(4), "Test7");
+        assertEquals(list.get(5), "Test3");
+        assertEquals(list.get(6), "Test0");
+        assertEquals(list.get(7), "Test8");
+        assertEquals(list.get(8), "Test2");
+        assertEquals(list.get(9), "Test5");
     }
 }

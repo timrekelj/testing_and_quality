@@ -2,6 +2,8 @@ package timrekelj.fri;
 
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -216,4 +218,30 @@ public class BSTTest {
     public void testExistsEmpty() {
         assertFalse(bst.exists("Test"));
     }
+
+    @Test
+    public void testAsList() {
+        bst.add("Test1");
+        bst.add("Test5");
+        bst.add("Test2");
+        bst.add("Test3");
+        bst.add("Test0");
+        bst.add("Test8");
+        bst.add("Test9");
+        bst.add("Test6");
+        bst.add("Test7");
+        bst.add("Test4");
+        List<String> list = bst.asList();
+        assertEquals(list.get(0), "Test0");
+        assertEquals(list.get(1), "Test1");
+        assertEquals(list.get(2), "Test2");
+        assertEquals(list.get(3), "Test3");
+        assertEquals(list.get(4), "Test4");
+        assertEquals(list.get(5), "Test5");
+        assertEquals(list.get(6), "Test6");
+        assertEquals(list.get(7), "Test7");
+        assertEquals(list.get(8), "Test8");
+        assertEquals(list.get(9), "Test9");
+    }
+
 }

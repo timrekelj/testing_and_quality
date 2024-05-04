@@ -87,6 +87,17 @@ public class Sklad<G> implements Seznam<G> {
         return (root == null);
     }
 
+    @Override
+    public java.util.List<G> asList() {
+        java.util.List<G> list = new java.util.ArrayList<>();
+        Element<G> current = root;
+        while (current != null) {
+            list.add(current.value);
+            current = current.next;
+        }
+        return list;
+    }
+
     public int search(G value) {
         int count = 0;
         Element<G> current = root;
